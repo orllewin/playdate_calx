@@ -1,0 +1,7 @@
+name=Coracle
+author=Orllewin
+description=The Coracle framework, and test code
+bundleID=orllewin.coracle.playdate.coracle
+version=1.0
+buildNumber=1
+imagePath=launch_assets/
