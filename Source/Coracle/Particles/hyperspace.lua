@@ -14,7 +14,6 @@ function HyperspaceStar:init()
 	 HyperspaceStar.super.init(self)
 	 
 	 local randomAngle = math.random() * TAU
-	 print("randomAngle: " .. randomAngle)
 	 local randomRadius = 65 * math.sqrt(math.random())
 	 
 	 local x = width/2 + (randomRadius * math.cos(randomAngle))

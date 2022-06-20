@@ -17,6 +17,7 @@ local level1IntroDismissed = function()
 	print("level1IntroDismissed()")
 	activeScene:clear()
 	activeScene = Level1Scene()
+	audio:playLevel1()
 end
 
 local startDismiss = function()

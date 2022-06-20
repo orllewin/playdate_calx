@@ -12,16 +12,17 @@ local crankRad = 0
 
 function Star:init(minSpeed, maxSpeed)
 	 Star.super.init(self)
-	 self.size = math.random(1, 3)
+	 self.size = 1
 	 self.location = Vector((math.random(-width/10, width/10)/2), math.random(-height/10, height/10))
 	 self.rotatedLocation = Vector(self.location.x, self.location.y)
 	 self.z = math.random(width/2)
 	 self.speed = math.random(minSpeed, maxSpeed)
 end
 
-function Starfield:init(starCount, minSpeed, maxSpeed)
+function Starfield:init(starCount, minSpeed, maxSpeed, sizeIncrement)
 	Starfield.super.init(self)
 	self.locus = Vector(width/4, height/4)
+	self.sizeIncrement = sizeIncrement
 	self.stars = {}
 	for i = 1, starCount do
 		local star = Star(minSpeed, maxSpeed)
@@ -120,7 +121,7 @@ function Starfield:draw(crankDegrees)
 		end
 
 		star.z = star.z - star.speed
-		star.size = star.size + 0.05
+		star.size = star.size + self.sizeIncrement
 						
 		if(star.z <= 0) then
 			star.z = math.random(width/2, width)

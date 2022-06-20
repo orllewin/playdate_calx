@@ -7,14 +7,15 @@ class('Level1Scene').extends()
 
 
 
-local starfield = Starfield(50, 4, 12)
+local starfield = Starfield(50, 1, 2, 0.02)
 local starBackground = StarBackground(100, 1)
 
 local ship_default = playdate.graphics.image.new("images/ship_default")
 local ship_left = playdate.graphics.image.new("images/ship_bank_left")
 local ship_right = playdate.graphics.image.new("images/ship_bank_right")
 local shipSprite = playdate.graphics.sprite.new(ship_default)
-shipSprite:moveTo(200, 200)
+shipSprite:moveTo(200, 220)
+shipSprite:setScale(0.5)
 shipSprite:add()
 
 playdate.graphics.sprite.setBackgroundDrawingCallback(

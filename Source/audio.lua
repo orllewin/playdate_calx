@@ -10,6 +10,11 @@ function Audio:playIntro()
 	self.filePlayer:play(0)
 end
 
+function Audio:playLevel1()
+	self.filePlayer:load("audio/rolemusic_straw_fields")
+	self.filePlayer:play(0)
+end
+
 function Audio:clear()
 	self.filePlayer:stop()
 end

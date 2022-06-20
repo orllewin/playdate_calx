@@ -12,7 +12,7 @@ function StartScene:init(_onStartDismiss)
 	 self.startImage = playdate.graphics.image.new("images/splash_scene_background")
 	 self.degrees = 0
 	 self.starBackground = StarBackground(60, 1)
-	 self.starfield = Starfield(30, 4, 12)
+	 self.starfield = Starfield(30, 4, 12, 0.07)
 	 playdate.graphics.setColor(white)
 end
 
