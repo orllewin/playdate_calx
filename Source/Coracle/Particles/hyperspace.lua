@@ -72,7 +72,7 @@ function Hyperspace:draw()
 				local xx = C.x + (starTX - C.x) / lengthAB * originalLength
 				local yy = C.y + (starTY - C.y) / lengthAB * originalLength
 				line(starTX, starTY,  xx,  yy)
-				star.originalLength = star.originalLength + 4
+				star.originalLength = star.originalLength + 8
 				
 				if(xx < 0 or xx > width or yy < 0 or yy > height)then
 					star.juvenille = false

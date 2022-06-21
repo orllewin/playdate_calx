@@ -9,14 +9,13 @@ function SplashScene:init(onSplashDismiss)
 	 SplashScene.super.init(self)
 	 onDismiss = onSplashDismiss
 	 self.splashImage = playdate.graphics.image.new("images/splash_scene_background")
-	 self.timer = playdate.timer.performAfterDelay(1500, function() self:pop() end)
+	 self.timer = playdate.timer.performAfterDelay(2250, function() self:pop() end)
 	 
 	 local font = playdate.graphics.font.new('fonts/Roobert-11-Medium')
 	 graphics.setFont(font, "normal")
 end
 
 function SplashScene:pop()
-	print("pop...")
 	onDismiss()
 end
 

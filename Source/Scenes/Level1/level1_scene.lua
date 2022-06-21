@@ -7,7 +7,7 @@ class('Level1Scene').extends()
 
 
 
-local starfield = Starfield(50, 1, 2, 0.02)
+local starfield = Starfield(50, 2, 5, 0.02)
 local starBackground = StarBackground(100, 1)
 
 local ship_default = playdate.graphics.image.new("images/ship_default")

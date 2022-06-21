@@ -11,7 +11,7 @@ function Audio:playIntro()
 end
 
 function Audio:playLevel1()
-	self.filePlayer:load("audio/rolemusic_straw_fields")
+	self.filePlayer:load("audio/rolemusic_itsumo_no_y_ni")
 	self.filePlayer:play(0)
 end
 
