@@ -2,26 +2,19 @@ import "CoreLibs/sprites"
 import 'Coracle/coracle'
 import 'Coracle/Particles/starfield'
 import 'Coracle/Particles/starbackground'
+import 'ship'
 
 class('Level1Scene').extends()
 
-
-
 local starfield = Starfield(50, 2, 5, 0.02)
 local starBackground = StarBackground(100, 1)
-
-local ship_default = playdate.graphics.image.new("images/ship_default")
-local ship_left = playdate.graphics.image.new("images/ship_bank_left")
-local ship_right = playdate.graphics.image.new("images/ship_bank_right")
-local shipSprite = playdate.graphics.sprite.new(ship_default)
-shipSprite:moveTo(200, 220)
-shipSprite:setScale(0.5)
-shipSprite:add()
+local ship = Ship(200, 220)
+ship:add()
 
 playdate.graphics.sprite.setBackgroundDrawingCallback(
-		function( x, y, width, height )
-			backgroundDark()	
-		end
+	function( x, y, width, height )
+		backgroundDark()	
+	end
 )
 
 local r = 50
@@ -72,22 +65,20 @@ function Level1Scene:draw()
 		backgroundAngle = normalizeAngle(backgroundAngle)	
 		angle = normalizeAngle(angle)	
 				
-		if(change > 0 and math.abs(change) > 10)then
-			--right
-			shipSprite:setImage(ship_right)
-			
-		end
 		if(change < 0 and math.abs(change) > 10)then
-			--left
-			shipSprite:setImage(ship_left)
-			
+			ship:bankRight()
+		end
+		if(change > 0 and math.abs(change) > 10)then
+			ship:bankLeft()
 		end
 		
 	else
-		shipSprite:setImage(ship_default)
+		ship:straight()
 	end
 	
 	playdate.graphics.sprite.update()
 	starBackground:draw(backgroundAngle)
 	starfield:draw(angle)
+	playdate.graphics.drawRect(ship:getHitRect())
+	-- playdate.graphics.drawRect(200 - (shipWidth/2), 220 - (shipHeight/2), shipWidth, shipHeight)
 end
