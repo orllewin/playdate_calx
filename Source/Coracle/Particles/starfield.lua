@@ -93,17 +93,14 @@ function Starfield:draw(crankDegrees)
 		local screenX = x - locusX + width/2
 		local screenY = y - locusY + height/2
 		
-		local cX = width/2
-		local cY = height/2
-		
-		local dx = screenX - cX
-		local dy = screenY - cY
+		local dx = screenX - C.x
+		local dy = screenY - C.y
 		
 		--distance origin to star
 		local r = math.sqrt(dx * dx + dy * dy)
 		
 		-- current radians
-		local currentRadians = math.atan2 ( cY - screenY, screenX - cX) 
+		local currentRadians = math.atan2 ( C.y - screenY, screenX - C.x) 
 		local currentDegrees = math.deg(currentRadians)
 		local targetDegrees = currentDegrees + crankDegrees
 		
@@ -111,8 +108,8 @@ function Starfield:draw(crankDegrees)
 		local xx = math.sin(targetRadians)
 		local yy = -1 * math.cos(targetRadians)
 		
-		xx = (r * xx) + cX
-		yy = (r * yy) + cY
+		xx = (r * xx) + C.x
+		yy = (r * yy) + C.y
 		
 		if(star.z > width/3)then
 			point(xx, yy)

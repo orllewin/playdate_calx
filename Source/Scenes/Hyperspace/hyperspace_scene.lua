@@ -36,6 +36,11 @@ function HyperspaceScene:draw()
 	self.hyperspace:draw()
 	
 	text(self.message, 10, 220)
+	
+	if(SKIP_HYPERSPACE)then
+		self:clear()
+		onHyperspaceSceneDismiss()
+	end
 end
 
 function HyperspaceScene:clear()

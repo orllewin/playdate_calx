@@ -38,6 +38,10 @@ function StartScene:draw()
 	if(aPressed())then
 		self:pop()
 	end
+	
+	if(AUTO_START)then
+		self:pop()
+	end
 end
 
 function StartScene:clear()

@@ -3,6 +3,7 @@ import 'Coracle/coracle'
 import 'Coracle/Particles/starfield'
 import 'Coracle/Particles/starbackground'
 import 'ship'
+import 'laser'
 
 class('Level1Scene').extends()
 
@@ -10,6 +11,8 @@ local starfield = Starfield(50, 2, 5, 0.02)
 local starBackground = StarBackground(100, 1)
 local ship = Ship(200, 220)
 ship:add()
+
+local laser = Laser(200, 220)
 
 playdate.graphics.sprite.setBackgroundDrawingCallback(
 	function( x, y, width, height )
@@ -36,6 +39,9 @@ end
 
 function Level1Scene:draw()
 	
+	if(aPressed())then
+		laser:fireBasic(playdate.getCrankPosition())
+	end
 	
 	if(upRepeat())then
 		starfield:up(1.5)
@@ -79,6 +85,7 @@ function Level1Scene:draw()
 	playdate.graphics.sprite.update()
 	starBackground:draw(backgroundAngle)
 	starfield:draw(angle)
+	laser:drawAll(change)
 	playdate.graphics.drawRect(ship:getHitRect())
 	-- playdate.graphics.drawRect(200 - (shipWidth/2), 220 - (shipHeight/2), shipWidth, shipHeight)
 end
