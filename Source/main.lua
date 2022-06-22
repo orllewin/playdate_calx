@@ -2,10 +2,12 @@ import 'Scenes/Splash/splash_scene'
 import 'Scenes/Start/start_scene'
 import 'Scenes/Hyperspace/hyperspace_scene'
 import 'Scenes/Level1/level1_scene'
+import 'Scenes/GameOver/gameover_scene'
 import 'audio'
 
 --Global config
 SPLASH_TIME = 500
+GAME_OVER_TIME = 5000
 AUTO_START = true
 SKIP_HYPERSPACE = true
 ACCURATE_COLLISIONS = true
@@ -19,10 +21,15 @@ scene = Scenes.splash
 audio = Audio()
 playAudio = true
 
+local gameOver = function()
+	activeScene:clear()
+	activeScene = GameOverScene()
+end
+
 local level1IntroDismissed = function()
 	print("level1IntroDismissed()")
 	activeScene:clear()
-	activeScene = Level1Scene()
+	activeScene = Level1Scene(gameOver)
 	audio:playLevel1()
 end
 

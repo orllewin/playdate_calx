@@ -4,8 +4,8 @@ import 'Coracle/Particles/starfield'
 import 'Coracle/Particles/starbackground'
 import 'ship'
 import 'laser'
-import 'energy_bar'
-import 'time_bar'
+import 'Views/energy_bar'
+import 'Views/time_bar'
 
 class('Level1Scene').extends()
 
@@ -56,13 +56,20 @@ function normalizeAngle(a)
 	return a
 end
 
-function Level1Scene:init()
+local onGameOver = nil
+
+function Level1Scene:init(_onGameOver)
 	 Level1Scene.super.init(self)
+	 onGameOver = _onGameOver
 	 playdate.graphics.setColor(white)
 	 
 	 --Screen font
 	 local font = playdate.graphics.font.new("fonts/font-rains-1x")
 	 playdate.graphics.setFont(font, "normal")
+end
+
+function Level1Scene:gameOver()
+	onGameOver()
 end
 
 function Level1Scene:draw()
