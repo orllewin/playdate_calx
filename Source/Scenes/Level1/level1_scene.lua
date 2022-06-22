@@ -124,4 +124,12 @@ function Level1Scene:draw()
 	energyBar:setEnergy(ship:getEnergy())
 	energyBar:draw()
 	timeBar:draw()
+	
+	if(energyBar:getEnergy() <= 0)then
+		onGameOver()
+	end
+end
+
+function Level1Scene:clear()
+	print("todo - clear level 1 resources")
 end

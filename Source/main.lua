@@ -22,6 +22,7 @@ audio = Audio()
 playAudio = true
 
 local gameOver = function()
+	print("GAME OVER")
 	activeScene:clear()
 	activeScene = GameOverScene()
 end
