@@ -4,9 +4,11 @@ import 'Scenes/Hyperspace/hyperspace_scene'
 import 'Scenes/Level1/level1_scene'
 import 'audio'
 
+--Global config
 SPLASH_TIME = 500
 AUTO_START = true
 SKIP_HYPERSPACE = true
+ACCURATE_COLLISIONS = true
 
 graphics = playdate.graphics
 sound = playdate.sound

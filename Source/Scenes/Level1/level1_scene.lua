@@ -111,8 +111,6 @@ function Level1Scene:draw()
 	starBackground:draw(backgroundAngle)
 	starfield:draw(angle, ship:getHitRect())
 	laser:drawAll(change)
-	playdate.graphics.drawRect(ship:getHitRect())
 	energyBar:setEnergy(ship:getEnergy())
 	energyBar:draw()
-	-- playdate.graphics.drawRect(200 - (shipWidth/2), 220 - (shipHeight/2), shipWidth, shipHeight)
 end
