@@ -4,15 +4,36 @@ import 'Coracle/Particles/starfield'
 import 'Coracle/Particles/starbackground'
 import 'ship'
 import 'laser'
+import 'energy_bar'
 
 class('Level1Scene').extends()
 
-local starfield = Starfield(25, 2, 5, 0.02)
-local starBackground = StarBackground(100, 1)
+
+--Ship
 local ship = Ship(200, 220)
 ship:add()
 
+--Energy
+local energyBar = EnergyBar()
+
+--Laser
 local laser = Laser(200, 220)
+
+--Starfield
+onCollision = function()
+	ship:collision()
+	
+	playdate.graphics.setColor(black)
+	fill(0.5)
+	circle(200, 220, 20)
+	playdate.graphics.setColor(white)
+end
+
+local starfield = Starfield(50, 2, 5, 0.02)
+starfield:setCollisionListener(onCollision)
+
+--Star background
+local starBackground = StarBackground(100, 1)
 
 playdate.graphics.sprite.setBackgroundDrawingCallback(
 	function( x, y, width, height )
@@ -35,6 +56,10 @@ end
 function Level1Scene:init()
 	 Level1Scene.super.init(self)
 	 playdate.graphics.setColor(white)
+	 
+	 --Screen font
+	 local font = playdate.graphics.font.new("fonts/font-rains-1x")
+	 playdate.graphics.setFont(font, "normal")
 end
 
 function Level1Scene:draw()
@@ -87,5 +112,7 @@ function Level1Scene:draw()
 	starfield:draw(angle, ship:getHitRect())
 	laser:drawAll(change)
 	playdate.graphics.drawRect(ship:getHitRect())
+	energyBar:setEnergy(ship:getEnergy())
+	energyBar:draw()
 	-- playdate.graphics.drawRect(200 - (shipWidth/2), 220 - (shipHeight/2), shipWidth, shipHeight)
 end

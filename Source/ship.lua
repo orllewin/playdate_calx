@@ -6,6 +6,8 @@ local shipDefault = playdate.graphics.image.new("images/ship_default")
 local shipLeft = playdate.graphics.image.new("images/ship_bank_left")
 local shipRight = playdate.graphics.image.new("images/ship_bank_right")
 
+local collisionSample = playdate.sound.sampleplayer.new("audio/collision")
+
 local shipDefaultWidth, shipDefaultHeight = shipDefault:getSize()
 local shipBankedWidth, shipBankedHeight = shipLeft:getSize()
 
@@ -16,6 +18,7 @@ ShipState = {default=0, left=1, right=2}
 
 function Ship:init(x, y)
 	Ship.super.init(self)
+	self.energy = 400
 	self.shipState = ShipState.default
 	self:setImage(shipDefault)
 	self:moveTo(x, y)
@@ -25,6 +28,17 @@ function Ship:init(x, y)
 	
 	bankedRect.x = x - shipBankedWidth/2
 	bankedRect.y = y - shipBankedHeight/2
+end
+
+function Ship:collision()
+	self.energy = self.energy - 5
+	if(collisionSample:isPlaying() == false)then
+		collisionSample:play()
+	end
+end
+
+function Ship:getEnergy()
+	return self.energy
 end
 
 function Ship:bankLeft()

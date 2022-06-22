@@ -69,6 +69,10 @@ function fill(alpha)
 	end
 end
 
+function resetFill()
+graphics.setDitherPattern(nill)
+end
+
 function text(text, x, y)
 	graphics.drawText(text, x, y)
 end
