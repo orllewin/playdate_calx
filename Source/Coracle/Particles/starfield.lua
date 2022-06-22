@@ -139,18 +139,31 @@ function Starfield:draw(crankDegrees, shipRect)
       		local x2 = shipRect.x
       		local y2 = shipRect.y + shipRect.height
       		
+      		--bottom right
+      		local x3 = shipRect.x + shipRect.width
+      		local y3 = shipRect.y + shipRect.height
+      		
       		local sideLength = fastDistance(x1, y1, x2, y2)
-       		
-      		if (((xx - x1) * (y2 - y1) - (yy - y1) * (x2 - x1)) / sideLength <= star.size)then
-        		self:collision()
-					else
-						--bottom right
-						local x3 = shipRect.x + shipRect.width
-						local y3 = shipRect.y + shipRect.height
-						
-						if (((xx - x1) * (y3 - y1) - (yy - y1) * (x3 - x1)) / sideLength <= star.size)then
-							self:collision()
-						end
+      		
+      		if(xx < C.x - star.size)then
+        		--do left only
+          		if (((xx - x1) * (y2 - y1) - (yy - y1) * (x2 - x1)) / sideLength <= star.size)then
+            		self:collision()
+          		end
+      		elseif(xx > C.x + star.size)then
+        		--do right only
+          		if (((xx - x1) * (y3 - y1) - (yy - y1) * (x3 - x1)) / sideLength <= star.size)then
+            		self:collision()
+          		end
+      		else
+        		--do both
+          		if (((xx - x1) * (y2 - y1) - (yy - y1) * (x2 - x1)) / sideLength <= star.size)then
+            		self:collision()
+          		else
+            		if (((xx - x1) * (y3 - y1) - (yy - y1) * (x3 - x1)) / sideLength <= star.size)then
+              		self:collision()
+            		end
+          		end
       		end
     		else
       		self:collision()

@@ -5,6 +5,7 @@ import 'Coracle/Particles/starbackground'
 import 'ship'
 import 'laser'
 import 'energy_bar'
+import 'time_bar'
 
 class('Level1Scene').extends()
 
@@ -16,6 +17,8 @@ ship:add()
 --Energy
 local energyBar = EnergyBar()
 
+local timeBar = TimeBar(1000 * 60)
+
 --Laser
 local laser = Laser(200, 220)
 
@@ -24,7 +27,7 @@ onCollision = function()
 	ship:collision()
 	
 	playdate.graphics.setColor(black)
-	fill(0.5)
+	fill(0.75)
 	circle(200, 220, 20)
 	playdate.graphics.setColor(white)
 end
@@ -113,4 +116,5 @@ function Level1Scene:draw()
 	laser:drawAll(change)
 	energyBar:setEnergy(ship:getEnergy())
 	energyBar:draw()
+	timeBar:draw()
 end
