@@ -253,13 +253,29 @@ end
 function fastDistance(x1, y1, x2, y2)
   local dx = x1 - x2
   local dy = y1 - y2
-  return fastSqrt(dx * dx + dy * dy)
+	local x = dx * dx + dy * dy
+	if(x < 1)then
+		return fastSqrt(dx * dx + dy * dy, 6)
+	else
+		return fastSqrt(dx * dx + dy * dy)
+	end
 end
 
+-- Safe for larger distances > 1
 function fastSqrt(x)
   local s=((x/2) + x / (x/2)) / 2
   for i = 1, 3 do
       s = (s + x/s) / 2
   end
   return s
+end
+
+-- precision: 2 to n, higher is more accurate
+-- use this method when distances are very small with precision of 5 or 6
+function fastSqrt2(x, precision)
+	local s=((x/2) + x / (x/2)) / 2
+	for i = 1, precision do
+			s = (s + x/s) / 2
+	end
+	return s
 end

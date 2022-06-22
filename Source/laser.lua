@@ -1,5 +1,7 @@
 class('Beam').extends()
 
+import 'Coracle/coracle'
+
 function Beam:init(x, y, angle, speed)
 	Laser.super.init(self)
 	self.x = x
@@ -34,7 +36,7 @@ function Laser:drawAll(change)
 			local dy = beam.y - C.y
 			
 			--distance from bullet to screen centre
-			local r = math.sqrt(dx * dx + dy * dy)
+			local r = fastSqrt2(dx * dx + dy * dy, 6)
 			
 			r = r - beam.distance
 			
@@ -57,8 +59,8 @@ function Laser:drawAll(change)
 			beam.size -= 0.06
 		end
 		
-		if(beam.speed > 0.1)then
-			beam.speed = beam.speed - 0.2
+		if(beam.speed > 0.4)then
+			beam.speed = beam.speed - 0.4
 		end
 		
 		if r < 5 then

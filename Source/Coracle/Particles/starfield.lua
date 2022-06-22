@@ -130,31 +130,31 @@ function Starfield:draw(crankDegrees, shipRect)
 		--Check collision
 		if(shipRect ~= nil and yy >= shipRect.y and yy < height)then
   		if(xx >= shipRect.x and xx <= shipRect.x + shipRect.width)then
-				if(ACCURATE_COLLISIONS)then
-					--ship point:
-					local x1 = shipRect.x + (shipRect.width/2)
-					local y1 = shipRect.y
-					
-					--bottom left
-					local x2 = shipRect.x
-					local y2 = shipRect.y + shipRect.height
-					
-					local sideLength = fastDistance(x1, y1, x2, y2)
-			 		
-					if (((xx - x1) * (y2 - y1) - (yy - y1) * (x2 - x1)) / sideLength <= star.size)then
-			  		self:collision()
-					end
-					
-					--bottom right
-					local x3 = shipRect.x + shipRect.width
-					local y3 = shipRect.y + shipRect.height
-			
-					if (((xx - x1) * (y3 - y1) - (yy - y1) * (x3 - x1)) / sideLength <= star.size)then
-			  		self:collision()
-					end
-				else
-					self:collision()
-				end
+    		if(ACCURATE_COLLISIONS)then
+      		--ship point:
+      		local x1 = shipRect.x + (shipRect.width/2)
+      		local y1 = shipRect.y
+      		
+      		--bottom left
+      		local x2 = shipRect.x
+      		local y2 = shipRect.y + shipRect.height
+      		
+      		local sideLength = fastDistance(x1, y1, x2, y2)
+       		
+      		if (((xx - x1) * (y2 - y1) - (yy - y1) * (x2 - x1)) / sideLength <= star.size)then
+        		self:collision()
+					else
+						--bottom right
+						local x3 = shipRect.x + shipRect.width
+						local y3 = shipRect.y + shipRect.height
+						
+						if (((xx - x1) * (y3 - y1) - (yy - y1) * (x3 - x1)) / sideLength <= star.size)then
+							self:collision()
+						end
+      		end
+    		else
+      		self:collision()
+    		end
   		end
 		end
 		
