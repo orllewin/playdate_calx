@@ -7,7 +7,7 @@ import 'laser'
 
 class('Level1Scene').extends()
 
-local starfield = Starfield(50, 2, 5, 0.02)
+local starfield = Starfield(25, 2, 5, 0.02)
 local starBackground = StarBackground(100, 1)
 local ship = Ship(200, 220)
 ship:add()
@@ -84,7 +84,7 @@ function Level1Scene:draw()
 	
 	playdate.graphics.sprite.update()
 	starBackground:draw(backgroundAngle)
-	starfield:draw(angle)
+	starfield:draw(angle, ship:getHitRect())
 	laser:drawAll(change)
 	playdate.graphics.drawRect(ship:getHitRect())
 	-- playdate.graphics.drawRect(200 - (shipWidth/2), 220 - (shipHeight/2), shipWidth, shipHeight)

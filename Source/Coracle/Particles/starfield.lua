@@ -9,6 +9,7 @@ class('Starfield').extends()
 class('Star').extends()
 
 local crankRad = 0
+local collisionListener = nil
 
 function Star:init(minSpeed, maxSpeed)
 	 Star.super.init(self)
@@ -28,6 +29,17 @@ function Starfield:init(starCount, minSpeed, maxSpeed, sizeIncrement)
 		local star = Star(minSpeed, maxSpeed)
 		table.insert(self.stars, star)
 	 end
+end
+
+function Starfield:setCollisionListener(_collisionListener)
+	collisionListener = _collisionListener
+end
+
+function Starfield:collision()
+	print("Collision!")
+	if(collisionListener ~= nil)then
+		collisionListener()
+	end
 end
 
 function Starfield:down(amount)
@@ -80,7 +92,7 @@ function Starfield:easeStraight(amount)
 	end
 end
 
-function Starfield:draw(crankDegrees)
+function Starfield:draw(crankDegrees, shipRect)
 	for i = 1, #self.stars do
 		local star = self.stars[i]
 		
@@ -99,7 +111,6 @@ function Starfield:draw(crankDegrees)
 		--distance origin to star
 		local r = math.sqrt(dx * dx + dy * dy)
 		
-		-- current radians
 		local currentRadians = math.atan2 ( C.y - screenY, screenX - C.x) 
 		local currentDegrees = math.deg(currentRadians)
 		local targetDegrees = currentDegrees + crankDegrees
@@ -116,7 +127,16 @@ function Starfield:draw(crankDegrees)
 		else
 			circle(xx, yy, star.size)
 		end
-
+		
+		--Check collision
+		if(shipRect ~= nil and yy >= shipRect.y)then
+			if(xx >= shipRect.x and xx <= shipRect.x + shipRect.width)then
+				self:collision()
+			end
+		end
+		
+		
+		--Update position
 		star.z = star.z - star.speed
 		star.size = star.size + self.sizeIncrement
 						
