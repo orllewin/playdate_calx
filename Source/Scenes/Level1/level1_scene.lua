@@ -29,7 +29,7 @@ onCollision = function()
 	playdate.graphics.setColor(white)
 end
 
-local starfield = Starfield(50, 2, 5, 0.02)
+local starfield = Starfield(35, 2, 5, 0.02)
 starfield:setCollisionListener(onCollision)
 
 --Star background

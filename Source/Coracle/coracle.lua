@@ -249,3 +249,17 @@ function distance(x1, y1, x2, y2)
 	local dy = y1 - y2
 	return math.sqrt(dx * dx + dy * dy)
 end
+
+function fastDistance(x1, y1, x2, y2)
+  local dx = x1 - x2
+  local dy = y1 - y2
+  return fastSqrt(dx * dx + dy * dy)
+end
+
+function fastSqrt(x)
+  local s=((x/2) + x / (x/2)) / 2
+  for i = 1, 3 do
+      s = (s + x/s) / 2
+  end
+  return s
+end

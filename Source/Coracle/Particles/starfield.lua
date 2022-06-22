@@ -36,7 +36,6 @@ function Starfield:setCollisionListener(_collisionListener)
 end
 
 function Starfield:collision()
-	print("Collision!")
 	if(collisionListener ~= nil)then
 		collisionListener()
 	end
@@ -109,7 +108,7 @@ function Starfield:draw(crankDegrees, shipRect)
 		local dy = screenY - C.y
 		
 		--distance origin to star
-		local r = math.sqrt(dx * dx + dy * dy)
+		local r = fastSqrt(dx * dx + dy * dy)
 		
 		local currentRadians = math.atan2 ( C.y - screenY, screenX - C.x) 
 		local currentDegrees = math.deg(currentRadians)
@@ -129,7 +128,7 @@ function Starfield:draw(crankDegrees, shipRect)
 		end
 		
 		--Check collision
-		if(shipRect ~= nil and yy >= shipRect.y)then
+		if(shipRect ~= nil and yy >= shipRect.y and yy < height)then
   		if(xx >= shipRect.x and xx <= shipRect.x + shipRect.width)then
 				if(ACCURATE_COLLISIONS)then
 					--ship point:
@@ -140,11 +139,9 @@ function Starfield:draw(crankDegrees, shipRect)
 					local x2 = shipRect.x
 					local y2 = shipRect.y + shipRect.height
 					
-					local dx = x1 - x2
-					local dy = y1 - y2
-					local sidelength = math.sqrt(dx * dx + dy * dy)
+					local sideLength = fastDistance(x1, y1, x2, y2)
 			 		
-					if (((xx - x1) * (y2 - y1) - (yy - y1) * (x2 - x1)) / sidelength <= star.size)then
+					if (((xx - x1) * (y2 - y1) - (yy - y1) * (x2 - x1)) / sideLength <= star.size)then
 			  		self:collision()
 					end
 					
@@ -152,7 +149,7 @@ function Starfield:draw(crankDegrees, shipRect)
 					local x3 = shipRect.x + shipRect.width
 					local y3 = shipRect.y + shipRect.height
 			
-					if (((xx - x1) * (y3 - y1) - (yy - y1) * (x3 - x1)) / sidelength <= star.size)then
+					if (((xx - x1) * (y3 - y1) - (yy - y1) * (x3 - x1)) / sideLength <= star.size)then
 			  		self:collision()
 					end
 				else
