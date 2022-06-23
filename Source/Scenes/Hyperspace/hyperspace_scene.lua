@@ -1,5 +1,6 @@
 import 'Coracle/coracle'
 import 'Coracle/Particles/hyperspace'
+import 'CoreLibs/ui' 
 
 class('HyperspaceScene').extends()
 
@@ -30,6 +31,8 @@ function HyperspaceScene:init(message, _onHyperspaceSceneDismiss)
 	 self.hyperspace = Hyperspace(85, onHyperspaceDismiss)
 	 self.message = message
 	 
+	 self.crankAlertStarted = false
+	 
 	 self.synth = sound.synth.new(playdate.sound.kWaveNoise)
 	 self.filter = sound.twopolefilter.new("lowpass") -- XXX - snd.kFilterLowPass should work
 	 self.filter:setResonance(0.1)
@@ -50,6 +53,14 @@ function HyperspaceScene:draw()
 	if(aPressed() or SKIP_HYPERSPACE)then
 		self:clear()
 		onHyperspaceDismiss()
+	end
+	
+	if(playdate.isCrankDocked())then
+		if(self.crankAlertStarted == false)then
+			self.crankAlertStarted = true
+			playdate.ui.crankIndicator:start()
+		end
+		playdate.ui.crankIndicator:update()
 	end
 end
 
