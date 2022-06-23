@@ -9,35 +9,6 @@ import 'Views/time_bar'
 
 class('Level1Scene').extends()
 
-
---Ship
-local ship = Ship(200, 220)
-ship:add()
-
---Energy
-local energyBar = EnergyBar()
-
-local timeBar = TimeBar(1000 * 60)
-
---Laser
-local laser = Laser(200, 220)
-
---Starfield
-onCollision = function()
-	ship:collision()
-	
-	playdate.graphics.setColor(black)
-	fill(0.75)
-	circle(200, 220, 20)
-	playdate.graphics.setColor(white)
-end
-
-local starfield = Starfield(35, 2, 5, 0.02)
-starfield:setCollisionListener(onCollision)
-
---Star background
-local starBackground = StarBackground(100, 1)
-
 playdate.graphics.sprite.setBackgroundDrawingCallback(
 	function( x, y, width, height )
 		backgroundDark()	
@@ -56,12 +27,32 @@ function normalizeAngle(a)
 	return a
 end
 
-local onGameOver = nil
 
 function Level1Scene:init(_onGameOver)
 	 Level1Scene.super.init(self)
-	 onGameOver = _onGameOver
+	 self.onGameOver = _onGameOver
 	 playdate.graphics.setColor(white)
+	 
+	 self.ship = Ship(200, 220)
+	 self.ship:setEnergy(400)
+	 self.ship:add()
+	 
+	 --Collision and Starfield
+	 self.onCollision = function()
+		 self.ship:collision()
+		 
+		 playdate.graphics.setColor(black)
+		 fill(0.75)
+		 circle(200, 220, 20)
+		 playdate.graphics.setColor(white)
+	 end
+	 
+	 self.starfield = Starfield(35, 2, 5, 0.02)
+	 self.starfield:setCollisionListener(self.onCollision)
+	 self.starBackground = StarBackground(100, 1)
+	 self.energyBar = EnergyBar()
+	 self.timeBar = TimeBar(1000 * 60)
+	 self.laser = Laser(200, 220)
 	 
 	 --Screen font
 	 local font = playdate.graphics.font.new("fonts/font-rains-1x")
@@ -75,27 +66,31 @@ end
 function Level1Scene:draw()
 	
 	if(aPressed())then
-		laser:fireBasic(playdate.getCrankPosition())
+		self.laser:fireBasic(playdate.getCrankPosition())
+	end
+	
+	if(bPressed())then
+		self.ship:setEnergy(0)
 	end
 	
 	if(upRepeat())then
-		starfield:up(1.5)
+		self.starfield:up(1.5)
 	end
 	
 	if(downRepeat())then
-		starfield:down(1.5)
+		self.starfield:down(1.5)
 	end
 	
 	if(leftRepeat())then
-		starfield:left(1.5)
+		self.starfield:left(1.5)
 	end
 	
 	if(rightRepeat())then
-		starfield:right(1.5)
+		self.starfield:right(1.5)
 	end
 	
 	if(noDirectiontionalInput())then
-		starfield:easeStraight(0.75)
+		self.starfield:easeStraight(0.75)
 	end
 	
 	local change = playdate.getCrankChange()
@@ -107,26 +102,32 @@ function Level1Scene:draw()
 		angle = normalizeAngle(angle)	
 				
 		if(change < 0 and math.abs(change) > 10)then
-			ship:bankRight()
+			self.ship:bankRight()
 		end
 		if(change > 0 and math.abs(change) > 10)then
-			ship:bankLeft()
+			self.ship:bankLeft()
 		end
 		
 	else
-		ship:straight()
+		self.ship:straight()
 	end
 	
 	playdate.graphics.sprite.update()
-	starBackground:draw(backgroundAngle)
-	starfield:draw(angle, ship:getHitRect())
-	laser:drawAll(change)
-	energyBar:setEnergy(ship:getEnergy())
-	energyBar:draw()
-	timeBar:draw()
+	self.starBackground:draw(backgroundAngle)
+	self.starfield:draw(angle, self.ship:getHitRect())
+	self.laser:drawAll(change)
+	self.energyBar:setEnergy(self.ship:getEnergy())
+	self.energyBar:draw()
+	self.timeBar:draw()
 	
-	if(energyBar:getEnergy() <= 0)then
-		onGameOver()
+	if(self.energyBar:getEnergy() <= 0)then
+		if(self.onGameOver ~= nil)then
+			self.onGameOver()
+		else
+			activeScene:clear()
+			activeScene = GameOverScene()
+		end
+		
 	end
 end
 

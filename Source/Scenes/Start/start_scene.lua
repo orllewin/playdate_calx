@@ -4,21 +4,19 @@ import 'Coracle/Particles/starbackground'
 
 class('StartScene').extends()
 
-local onStartDismiss = nil
-
-function StartScene:init(_onStartDismiss)
+function StartScene:init()
 	 StartScene.super.init(self)
-	 onStartDismiss = _onStartDismiss
+	 
+	 self.onDismissStart = function()
+		 activeScene:clear()
+		 activeScene = HyperspaceScene("Level 1 - Get Ready!")
+	 end
+	 
 	 self.startImage = playdate.graphics.image.new("images/splash_scene_background")
 	 self.degrees = 0
 	 self.starBackground = StarBackground(60, 1)
 	 self.starfield = Starfield(30, 4, 12, 0.07)
 	 playdate.graphics.setColor(white)
-end
-
-function StartScene:pop()
-	print("pop...")
-	onStartDismiss()
 end
 
 function StartScene:draw()
@@ -36,11 +34,11 @@ function StartScene:draw()
 	text("Press A to start", 10, 220)
 
 	if(aPressed())then
-		self:pop()
+		self:onDismissStart()
 	end
 	
 	if(AUTO_START)then
-		self:pop()
+		self:onDismissStart()
 	end
 end
 

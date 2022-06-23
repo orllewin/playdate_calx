@@ -45,6 +45,23 @@ function noFill()
 	graphics.setDitherPattern(0.0, playdate.graphics.image.kDitherTypeScreen)
 end
 
+
+function setTextWhite()
+	playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeFillWhite)
+end
+
+function setTextBlack()
+	playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeFillBlack)
+end
+
+function setBlack()
+	playdate.graphics.setColor(black)
+end
+
+function setWhite()
+	playdate.graphics.setColor(white)
+end
+
 function stroke()
 	if(mode == DrawingMode.Fill) 
 	then
@@ -70,7 +87,7 @@ function fill(alpha)
 end
 
 function resetFill()
-graphics.setDitherPattern(nill)
+	graphics.setDitherPattern(nill)
 end
 
 function text(text, x, y)

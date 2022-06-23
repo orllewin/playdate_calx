@@ -5,18 +5,29 @@ class('GameOverScene').extends()
 
 local onDismiss = nil
 
-function GameOverScene:init(message, _onGameOverSceneDismiss)
+function GameOverScene:init(_onGameOverSceneDismiss)
 	GameOverScene.super.init(self)
-	onDismiss = _onGameOverSceneDismiss
+	
+	if(_onGameOverSceneDismiss ~= nil)then
+		onDismiss = _onGameOverSceneDismiss
+	end
+	
 	self.background = playdate.graphics.image.new("images/game_over_scene_background")
 	self.timer = playdate.timer.performAfterDelay(GAME_OVER_TIME, function() self:pop() end)
 end
 
 function GameOverScene:pop()
-	onDismiss()
+	if(onDismiss ~= nil)then
+		onDismiss()
+	else
+		activeScene:clear()
+		activeScene = SplashScene()
+	end
+	
 end
 
 function GameOverScene:draw()
+	backgroundDark()
 	self.background:draw(0, 0)
 	
 	playdate.timer.updateTimers()

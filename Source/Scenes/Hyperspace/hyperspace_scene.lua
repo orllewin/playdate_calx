@@ -10,12 +10,22 @@ local onHyperspaceSceneDismiss = nil
 
 local onHyperspaceDismiss = function()
 	print("Hyperspace finished... pop screen")
-	onHyperspaceSceneDismiss()
+	if(onHyperspaceSceneDismiss ~= null)then
+		onHyperspaceSceneDismiss()
+	else
+		--todo - start level 1
+		activeScene:clear()
+		activeScene = Level1Scene()
+	end
+	
 end
 
 function HyperspaceScene:init(message, _onHyperspaceSceneDismiss)
 	 HyperspaceScene.super.init(self)
-	 onHyperspaceSceneDismiss = _onHyperspaceSceneDismiss
+	 
+	 if(_onHyperspaceSceneDismiss ~= nil)then
+	 	onHyperspaceSceneDismiss = _onHyperspaceSceneDismiss
+ 		end
 	 
 	 self.hyperspace = Hyperspace(85, onHyperspaceDismiss)
 	 self.message = message
@@ -39,7 +49,7 @@ function HyperspaceScene:draw()
 	
 	if(SKIP_HYPERSPACE)then
 		self:clear()
-		onHyperspaceSceneDismiss()
+		onHyperspaceDismiss()
 	end
 end
 

@@ -41,6 +41,10 @@ function Ship:getEnergy()
 	return self.energy
 end
 
+function Ship:setEnergy(energy)
+	self.energy = energy
+end
+
 function Ship:bankLeft()
 	self:setImage(shipLeft)
 	self.shipState = ShipState.left

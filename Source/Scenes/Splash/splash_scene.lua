@@ -3,25 +3,27 @@ import 'Coracle/coracle'
 
 class('SplashScene').extends()
 
-local onDismiss = nil
-
-function SplashScene:init(onSplashDismiss)
+function SplashScene:init()
 	 SplashScene.super.init(self)
-	 onDismiss = onSplashDismiss
+	 
 	 self.splashImage = playdate.graphics.image.new("images/splash_scene_background")
-	 self.timer = playdate.timer.performAfterDelay(SPLASH_TIME, function() self:pop() end)
+	 
+	 self.onSplashEnd = function()
+		 activeScene:clear()
+		 activeScene = StartScene()
+	 end
+	 
+	 self.timer = playdate.timer.performAfterDelay(SPLASH_TIME, self.onSplashEnd)
 	 
 	 local font = playdate.graphics.font.new('fonts/Roobert-11-Medium')
 	 graphics.setFont(font, "normal")
 end
 
-function SplashScene:pop()
-	onDismiss()
-end
-
 function SplashScene:draw()
+	background()
 	self.splashImage:draw(0, 0)
 
+	--setTextWhite()
 	text("©2022 Orllewin", 10, 180)
 	text("Music by Rolemusic", 10, 200)
 	text("Powered by Coracle", 10, 220)
@@ -31,5 +33,5 @@ function SplashScene:draw()
 end
 
 function SplashScene:clear()
-	print("todo")
+	print("SplashScene clear()")
 end
