@@ -56,17 +56,16 @@ function GameOverScene:draw()
 	local c = math.floor(height*1.2)
 
 	for i=1,c do
-		local y=fastSqrt2(i*65, 5);
-		local r=math.pow(i/height, 3) * i/2 + 40;
-		local N=perlinNoise(i * 0.1 - f, 1) * 500 + f * 0.02
+		local y = fastSqrt2(i*65, 5);
+		local r = i * i * i / height / height / 2 + 40
+		--local N = perlinNoise(i * 0.1 - f, 1) * 400
+		local N = perlinNoise(i * 0.1 - f, 1) * 150 + f * 0.03
 		local xx = C.x + cos(N) * r
-		local yy =  y + sin(N) * r
+		local yy = y + sin(N) * r
 		circle(xx, yy, i * 0.04)
-		--line(C.x + cos(N - 0.1) * r, y + sin(N - 0.1) * r, C.x + cos(N + 0.1) * r, y + sin(N + 0.1) * r)
 	end
 	self.frame += 1
 	
-	--playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeFillWhite)
 	text(self.messageA, self.mesageAX, 100)
 	text(self.messageB, self.mesageBX, 130)
 end
