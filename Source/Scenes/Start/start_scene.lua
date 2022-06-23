@@ -82,6 +82,6 @@ function StartScene:draw()
 end
 
 function StartScene:clear()
-	print("todo - release resrouces from splash")
+	print("todo - release resrouces from start")
 	audio:clear()
 end

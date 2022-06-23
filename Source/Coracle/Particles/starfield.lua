@@ -27,10 +27,11 @@ function Star:init(minSpeed, maxSpeed)
 	 self.speed = random(minSpeed, maxSpeed)
 end
 
-function Starfield:init(starCount, minSpeed, maxSpeed, sizeIncrement)
+function Starfield:init(starCount, minSpeed, maxSpeed, sizeIncrement, maxStarSize)
 	Starfield.super.init(self)
 	self.locus = Vector(width/4, height/4)
 	self.sizeIncrement = sizeIncrement
+	self.maxStarSize = maxStarSize
 	self.stars = {}
 	for i = 1, starCount do
 		local star = Star(minSpeed, maxSpeed)
@@ -181,7 +182,10 @@ function Starfield:draw(crankDegrees, shipRect)
 		
 		--Update position
 		star.z = star.z - star.speed
-		star.size = star.size + self.sizeIncrement
+		
+		if(star.size < self.maxStarSize)then
+			star.size = star.size + self.sizeIncrement
+		end
 						
 		if(star.z <= 0) then
 			star.z = random(width/2, width)

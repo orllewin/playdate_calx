@@ -22,6 +22,7 @@ function SplashScene:init()
 end
 
 function SplashScene:draw()
+	background(black)
 	self.splashImage:draw(0, 0)
 
 	text("©2022 Orllewin", 10, 180)

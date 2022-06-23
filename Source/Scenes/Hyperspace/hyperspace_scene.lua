@@ -47,7 +47,7 @@ function HyperspaceScene:draw()
 	
 	text(self.message, 10, 220)
 	
-	if(SKIP_HYPERSPACE)then
+	if(aPressed() or SKIP_HYPERSPACE)then
 		self:clear()
 		onHyperspaceDismiss()
 	end

@@ -48,7 +48,7 @@ function Level1Scene:init()
 		 playdate.graphics.setColor(white)
 	 end
 	 
-	 self.starfield = Starfield(55, 2, 5, 0.02)
+	 self.starfield = Starfield(LVL1_STAR_COUNT, LVL1_STAR_MIN_SPEED, LVL1_STAR_MAX_SPEED, LVL1_STAR_SIZE_INC, LVL1_STAR_MAX_SIZE)
 	 self.starfield:setCollisionListener(self.onCollision)
 	 self.starBackground = StarBackground(100, 1)
 	 self.energyBar = EnergyBar()

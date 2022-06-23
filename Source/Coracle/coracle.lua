@@ -86,6 +86,15 @@ function fill(alpha)
 	end
 end
 
+function fill2(alpha)
+	alpha = alpha
+	graphics.setDitherPattern(1.0 - alpha, playdate.graphics.image.kDitherTypeBayer4x4)
+	if(mode == DrawingMode.Stroke) 
+	then
+	mode = DrawingMode.FillAndStroke
+	end
+end
+
 function resetFill()
 	graphics.setDitherPattern(nill)
 end
