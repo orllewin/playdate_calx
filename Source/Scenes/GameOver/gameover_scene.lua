@@ -28,6 +28,8 @@ function GameOverScene:init(score)
 	self.messageB = "You scored: " .. self.score
 	self.mesageBX = (width - font:getTextWidth(self.messageB))/2
 	
+	self.c = math.floor(height*1.2)
+	
 	gameoverSample:play()
 	
 	--Tunnel
@@ -53,12 +55,11 @@ function GameOverScene:draw()
 	setWhite()
 	fill2(0.3)
 	local f = self.frame/2
-	local c = math.floor(height*1.2)
+	
 
-	for i=1,c do
+	for i=1,self.c  do
 		local y = fastSqrt2(i*65, 5);
 		local r = i * i * i / height / height / 2 + 40
-		--local N = perlinNoise(i * 0.1 - f, 1) * 400
 		local N = perlinNoise(i * 0.1 - f, 1) * 150 + f * 0.03
 		local xx = C.x + cos(N) * r
 		local yy = y + sin(N) * r
