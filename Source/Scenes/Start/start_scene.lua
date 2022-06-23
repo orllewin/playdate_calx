@@ -44,4 +44,5 @@ end
 
 function StartScene:clear()
 	print("todo - release resrouces from splash")
+	audio:clear()
 end

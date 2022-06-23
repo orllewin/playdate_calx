@@ -28,9 +28,9 @@ function normalizeAngle(a)
 end
 
 
-function Level1Scene:init(_onGameOver)
+function Level1Scene:init()
 	 Level1Scene.super.init(self)
-	 self.onGameOver = _onGameOver
+
 	 playdate.graphics.setColor(white)
 	 
 	 self.ship = Ship(200, 220)
@@ -57,6 +57,8 @@ function Level1Scene:init(_onGameOver)
 	 --Screen font
 	 local font = playdate.graphics.font.new("fonts/font-rains-1x")
 	 playdate.graphics.setFont(font, "normal")
+	 
+	 audio:playLevel1()
 end
 
 function Level1Scene:gameOver()
@@ -121,16 +123,12 @@ function Level1Scene:draw()
 	self.timeBar:draw()
 	
 	if(self.energyBar:getEnergy() <= 0)then
-		if(self.onGameOver ~= nil)then
-			self.onGameOver()
-		else
 			activeScene:clear()
 			activeScene = GameOverScene()
-		end
-		
 	end
 end
 
 function Level1Scene:clear()
+	audio:clear()
 	print("todo - clear level 1 resources")
 end

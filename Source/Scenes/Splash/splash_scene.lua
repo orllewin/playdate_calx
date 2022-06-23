@@ -15,18 +15,18 @@ function SplashScene:init()
 	 
 	 self.timer = playdate.timer.performAfterDelay(SPLASH_TIME, self.onSplashEnd)
 	 
+	 audio:playIntro()
+	 
 	 local font = playdate.graphics.font.new('fonts/Roobert-11-Medium')
 	 graphics.setFont(font, "normal")
 end
 
 function SplashScene:draw()
-	background(black)
 	self.splashImage:draw(0, 0)
 
 	text("©2022 Orllewin", 10, 180)
 	text("Music by Rolemusic", 10, 200)
 	text("Powered by Coracle", 10, 220)
-	
 	
 	playdate.timer.updateTimers()
 end

@@ -31,12 +31,12 @@ function HyperspaceScene:init(message, _onHyperspaceSceneDismiss)
 	 self.message = message
 	 
 	 self.synth = sound.synth.new(playdate.sound.kWaveNoise)
-	 local filter = sound.twopolefilter.new("lowpass") -- XXX - snd.kFilterLowPass should work
-	 filter:setResonance(0.1)
-	 filter:setFrequency(400)
-	 sound.addEffect(filter)
+	 self.filter = sound.twopolefilter.new("lowpass") -- XXX - snd.kFilterLowPass should work
+	 self.filter:setResonance(0.1)
+	 self.filter:setFrequency(400)
+	 sound.addEffect(self.filter)
 	 self.synth:setVolume(1.0)
-	 if(playAudio)then
+	 if(PLAY_AUDIO)then
 	 	self.synth:playNote(330)
 	 end
 end
@@ -56,4 +56,5 @@ end
 function HyperspaceScene:clear()
 	print("HyperspaceScene clear()")
 	self.synth:stop()
+	sound.removeEffect(self.filter)
 end

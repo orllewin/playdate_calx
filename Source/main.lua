@@ -1,9 +1,11 @@
 --Global config
 SPLASH_TIME = 2500
 GAME_OVER_TIME = 5000
+HYPERSPACE_RAY_EXIT_SPEED = 10
 AUTO_START = false
-SKIP_HYPERSPACE = true
+SKIP_HYPERSPACE = false
 ACCURATE_COLLISIONS = true
+PLAY_AUDIO = true
 
 graphics = playdate.graphics
 sound = playdate.sound
@@ -16,21 +18,7 @@ import 'Scenes/GameOver/gameover_scene'
 import 'audio'
 
 audio = Audio()
-playAudio = true
-
-restart = function()
-	init()
-end
-
-function init()
-	if(playAudio)then
-		audio:playIntro()
-	end
-	
-	activeScene = SplashScene()
-end
-
-init()
+activeScene = SplashScene()
 
 function playdate.update()
 	activeScene:draw()
