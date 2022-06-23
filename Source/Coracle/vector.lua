@@ -1,5 +1,7 @@
 class('Vector').extends()
 
+local sqrt <const> = math.sqrt
+
 function Vector:init(x, y)
 	 Vector.super.init(self)
 	 self.x = x or 0
@@ -9,7 +11,7 @@ end
 function Vector:distance(vector)
 	local dx = self.x - vector.x
 	local dy = self.y - vector.y
-	return math.sqrt(dx * dx + dy * dy)
+	return sqrt(dx * dx + dy * dy)
 end
 
 function Vector:direction(vector)

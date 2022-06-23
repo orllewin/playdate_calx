@@ -8,6 +8,13 @@ import 'Coracle/vector'
 class('BackgroundStar').extends()
 class('StarBackground').extends()
 
+local atan2 <const> = math.atan2
+local cos <const> = math.cos
+local deg <const> = math.deg
+local rad <const> = math.rad
+local random <const> = math.random
+local sin <const> = math.sin
+
 local cX = width/2
 local cY = height/2
 
@@ -34,13 +41,13 @@ function StarBackground:draw(crankDegrees)
     --distance origin to star
     local r = distance(star.x, star.y, cX, cY)
     
-    local currentRadians = math.atan2 ( cY - star.y, star.x - cX) 
-    local currentDegrees = math.deg(currentRadians)
+    local currentRadians = atan2 ( cY - star.y, star.x - cX) 
+    local currentDegrees = deg(currentRadians)
     local targetDegrees = currentDegrees + (crankDegrees)
     
-    local targetRadians = math.rad(targetDegrees)
-    local xx = math.sin(targetRadians)
-    local yy = -1 * math.cos(targetRadians)
+    local targetRadians = rad(targetDegrees)
+    local xx = sin(targetRadians)
+    local yy = -1 * cos(targetRadians)
     
     xx = (r * xx) + cX
     yy = (r * yy) + cY
@@ -50,7 +57,5 @@ function StarBackground:draw(crankDegrees)
     else
       point(xx, yy)
     end
-    
-  
   end
 end

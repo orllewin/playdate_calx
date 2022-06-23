@@ -30,8 +30,8 @@ function Ship:init(x, y)
 	bankedRect.y = y - shipBankedHeight/2
 end
 
-function Ship:collision()
-	self.energy = self.energy - 5
+function Ship:collision(damage)
+	self.energy = self.energy - damage
 	if(collisionSample:isPlaying() == false)then
 		collisionSample:play()
 	end

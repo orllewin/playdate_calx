@@ -10,7 +10,7 @@ class('Drawing').extends()
 class('Game').extends()
 
 local graphics <const> = playdate.graphics
-
+local sqrt <const> = math.sqrt
 DrawingMode = {Stroke = "0", Fill = "1", FillAndStroke = "2"}
 
 TAU = 6.28318
@@ -264,7 +264,7 @@ end
 function distance(x1, y1, x2, y2)
 	local dx = x1 - x2
 	local dy = y1 - y2
-	return math.sqrt(dx * dx + dy * dy)
+	return sqrt(dx * dx + dy * dy)
 end
 
 function fastDistance(x1, y1, x2, y2)
@@ -276,6 +276,13 @@ function fastDistance(x1, y1, x2, y2)
 	else
 		return fastSqrt(dx * dx + dy * dy)
 	end
+end
+
+function fastDistance2(x1, y1, x2, y2, precision)
+	local dx = x1 - x2
+	local dy = y1 - y2
+	local x = dx * dx + dy * dy
+	return fastSqrt(dx * dx + dy * dy, precision)
 end
 
 -- Safe for larger distances > 1

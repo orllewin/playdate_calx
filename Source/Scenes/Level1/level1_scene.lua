@@ -39,7 +39,7 @@ function Level1Scene:init()
 	 
 	 --Collision and Starfield
 	 self.onCollision = function()
-		 self.ship:collision()
+		 self.ship:collision(20)
 		 
 		 playdate.graphics.setColor(black)
 		 fill(0.75)
@@ -47,7 +47,7 @@ function Level1Scene:init()
 		 playdate.graphics.setColor(white)
 	 end
 	 
-	 self.starfield = Starfield(35, 2, 5, 0.02)
+	 self.starfield = Starfield(55, 2, 5, 0.02)
 	 self.starfield:setCollisionListener(self.onCollision)
 	 self.starBackground = StarBackground(100, 1)
 	 self.energyBar = EnergyBar()

@@ -11,13 +11,20 @@ class('Star').extends()
 local crankRad = 0
 local collisionListener = nil
 
+local atan2 <const> = math.atan2
+local cos <const> = math.cos
+local deg <const> = math.deg
+local rad <const> = math.rad
+local random <const> = math.random
+local sin <const> = math.sin
+
 function Star:init(minSpeed, maxSpeed)
 	 Star.super.init(self)
 	 self.size = 1
-	 self.location = Vector((math.random(-width/10, width/10)/2), math.random(-height/10, height/10))
+	 self.location = Vector((random(-width/10, width/10)/2), random(-height/10, height/10))
 	 self.rotatedLocation = Vector(self.location.x, self.location.y)
-	 self.z = math.random(width/2)
-	 self.speed = math.random(minSpeed, maxSpeed)
+	 self.z =random(width/2)
+	 self.speed = random(minSpeed, maxSpeed)
 end
 
 function Starfield:init(starCount, minSpeed, maxSpeed, sizeIncrement)
@@ -67,9 +74,9 @@ end
 
 function Starfield:newVector(magnitude, angle)
 	angle = (angle + 270) % 360 -- rotate -90° so that 0° is north instead of east
-	local rad = math.rad(angle)
-	local x = magnitude * math.cos(rad)
-	local y = magnitude * math.sin(rad)
+	local radV = rad(angle)
+	local x = magnitude * cos(radV)
+	local y = magnitude * sin(radV)
 	return Vector(x, y)
 end
 
@@ -110,13 +117,13 @@ function Starfield:draw(crankDegrees, shipRect)
 		--distance origin to star
 		local r = fastSqrt(dx * dx + dy * dy)
 		
-		local currentRadians = math.atan2 ( C.y - screenY, screenX - C.x) 
-		local currentDegrees = math.deg(currentRadians)
+		local currentRadians = atan2 ( C.y - screenY, screenX - C.x) 
+		local currentDegrees = deg(currentRadians)
 		local targetDegrees = currentDegrees + crankDegrees
 		
-		local targetRadians = math.rad(targetDegrees)
-		local xx = math.sin(targetRadians)
-		local yy = -1 * math.cos(targetRadians)
+		local targetRadians = rad(targetDegrees)
+		local xx = sin(targetRadians)
+		local yy = -1 * cos(targetRadians)
 		
 		xx = (r * xx) + C.x
 		yy = (r * yy) + C.y
@@ -177,8 +184,8 @@ function Starfield:draw(crankDegrees, shipRect)
 		star.size = star.size + self.sizeIncrement
 						
 		if(star.z <= 0) then
-			star.z = math.random(width/2, width)
-			star.location = Vector((math.random(-width/10, width/10)/2), math.random(-height/10, height/10))
+			star.z = random(width/2, width)
+			star.location = Vector((random(-width/10, width/10)/2), random(-height/10, height/10))
 			star.size = 1
 		end
 	end

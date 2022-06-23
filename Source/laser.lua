@@ -2,6 +2,10 @@ class('Beam').extends()
 
 import 'Coracle/coracle'
 
+local rad <const> = math.rad
+local sin <const> = math.sin
+local cos <const> = math.cos
+
 function Beam:init(x, y, angle, speed)
 	Laser.super.init(self)
 	self.x = x
@@ -41,9 +45,9 @@ function Laser:drawAll(change)
 			r = r - beam.distance
 			
 			local targetDegrees = beam.angle - change
-			local targetRadians = math.rad(targetDegrees)
-			local xx = math.sin(targetRadians)
-			local yy = math.cos(targetRadians)
+			local targetRadians = rad(targetDegrees)
+			local xx = sin(targetRadians)
+			local yy = cos(targetRadians)
 			
 			xx = (r * xx) + C.x
 			yy = (r * yy) + C.y
