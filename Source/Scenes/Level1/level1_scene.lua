@@ -6,6 +6,7 @@ import 'ship'
 import 'laser'
 import 'Views/energy_bar'
 import 'Views/time_bar'
+import 'Views/score_view'
 
 class('Level1Scene').extends()
 
@@ -53,6 +54,7 @@ function Level1Scene:init()
 	 self.energyBar = EnergyBar()
 	 self.timeBar = TimeBar(1000 * 60)
 	 self.laser = Laser(200, 220)
+	 self.score = ScoreView(5, 28)
 	 
 	 --Screen font
 	 local font = playdate.graphics.font.new("fonts/font-rains-1x")
@@ -66,6 +68,8 @@ function Level1Scene:gameOver()
 end
 
 function Level1Scene:draw()
+	
+	
 	
 	if(aPressed())then
 		self.laser:fireBasic(playdate.getCrankPosition())
@@ -122,9 +126,12 @@ function Level1Scene:draw()
 	self.energyBar:draw()
 	self.timeBar:draw()
 	
+	self.score:addPoints(SURVIVAL_SCORE_INC)
+	self.score:draw()
+	
 	if(self.energyBar:getEnergy() <= 0)then
 			activeScene:clear()
-			activeScene = GameOverScene()
+			activeScene = GameOverScene(self.score:getFinalScore())
 	end
 end
 

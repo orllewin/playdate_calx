@@ -10,11 +10,14 @@ class('HyperspaceStar').extends()
 
 local onHyperspaceDismiss = nil
 
+local sqrt <const> = math.sqrt
+local random <const> = math.random
+
 function HyperspaceStar:init()
 	 HyperspaceStar.super.init(self)
 	 
-	 local randomAngle = math.random() * TAU
-	 local randomRadius = 65 * math.sqrt(math.random())
+	 local randomAngle = random() * TAU
+	 local randomRadius = 65 * sqrt(math.random())
 	 
 	 local x = width/2 + (randomRadius * math.cos(randomAngle))
 	 local y = height/2 + (randomRadius * math.sin(randomAngle))
@@ -50,7 +53,7 @@ function Hyperspace:draw()
 			local starY = star.location.y
 			
 			if(star.juvenille)then
-				local lengthAB = math.sqrt((C.x - starX)^2 + (C.y - starY)^2) 
+				local lengthAB = sqrt((C.x - starX)^2 + (C.y - starY)^2) 
 				local xx = C.x + (starX - C.x) / lengthAB * length
 				local yy = C.y + (starY - C.y) / lengthAB * length
 				line(starX, starY,  xx,  yy)
@@ -62,13 +65,13 @@ function Hyperspace:draw()
 					star.terminus.y = yy
 				end
 			else
-				local lengthAB = math.sqrt((C.x - starX)^2 + (C.y - starY)^2) 	
+				local lengthAB = sqrt((C.x - starX)^2 + (C.y - starY)^2) 	
 				local starTX = star.terminus.x
 				local starTY = star.terminus.y
 				
 				local originalLength = star.originalLength
 
-				local lengthAB = math.sqrt((C.x - starTX)^2 + (C.y - starTY)^2) 
+				local lengthAB = sqrt((C.x - starTX)^2 + (C.y - starTY)^2) 
 				local xx = C.x + (starTX - C.x) / lengthAB * originalLength
 				local yy = C.y + (starTY - C.y) / lengthAB * originalLength
 				line(starTX, starTY,  xx,  yy)
