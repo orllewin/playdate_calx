@@ -14,4 +14,5 @@ function TimeBar:draw()
 	playdate.graphics.fillRect(0, 12, 400 - (400/self.time) * elapsed, 12)
 	playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeNXOR)
 	playdate.graphics.drawText('Time: ' .. math.floor((self.time - elapsed)/1000), 5, 15)
+	resetDrawMode()
 end

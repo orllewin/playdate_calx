@@ -27,7 +27,7 @@ function GameOverScene:pop()
 end
 
 function GameOverScene:draw()
-	backgroundDark()
+	background(black)
 	self.background:draw(0, 0)
 	
 	playdate.timer.updateTimers()

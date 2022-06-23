@@ -27,13 +27,9 @@ height = 240
 -- Center of the screen
 C = Vector(200, 120)
 
-
-function background()
-	graphics.clear(graphics.kColorWhite)
-end
-
-function backgroundDark()
-	graphics.clear(graphics.kColorBlack)
+-- clears the screen, use with white or black: background(black)
+function background(color)
+	graphics.clear(color)
 end
 
 function noStroke()
@@ -60,6 +56,10 @@ end
 
 function setWhite()
 	playdate.graphics.setColor(white)
+end
+
+function resetDrawMode()
+	playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeCopy)
 end
 
 function stroke()

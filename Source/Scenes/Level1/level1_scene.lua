@@ -11,7 +11,7 @@ class('Level1Scene').extends()
 
 playdate.graphics.sprite.setBackgroundDrawingCallback(
 	function( x, y, width, height )
-		backgroundDark()	
+		background(black)	
 	end
 )
 

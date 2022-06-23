@@ -42,7 +42,7 @@ function HyperspaceScene:init(message, _onHyperspaceSceneDismiss)
 end
 
 function HyperspaceScene:draw()
-	backgroundDark()
+	background(black)
 	self.hyperspace:draw()
 	
 	text(self.message, 10, 220)

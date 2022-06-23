@@ -20,10 +20,9 @@ function SplashScene:init()
 end
 
 function SplashScene:draw()
-	background()
+	background(black)
 	self.splashImage:draw(0, 0)
 
-	--setTextWhite()
 	text("©2022 Orllewin", 10, 180)
 	text("Music by Rolemusic", 10, 200)
 	text("Powered by Coracle", 10, 220)

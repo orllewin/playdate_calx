@@ -20,7 +20,7 @@ function StartScene:init()
 end
 
 function StartScene:draw()
-	background()
+	background(black)
 	self.startImage:draw(0, 0)
 	self.starBackground:draw(self.degrees)
 	self.starfield:draw(self.degrees * -1)
