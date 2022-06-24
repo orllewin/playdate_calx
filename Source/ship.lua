@@ -6,6 +6,10 @@ local shipDefault = playdate.graphics.image.new("images/ship_default")
 local shipLeft = playdate.graphics.image.new("images/ship_bank_left")
 local shipRight = playdate.graphics.image.new("images/ship_bank_right")
 
+local shipDefaultShielded = playdate.graphics.image.new("images/ship_default_shielded")
+local shipLeftShielded = playdate.graphics.image.new("images/ship_bank_left_shielded")
+local shipRightShielded = playdate.graphics.image.new("images/ship_bank_right_shielded")
+
 local collisionSample = playdate.sound.sampleplayer.new("audio/collision")
 
 local shipDefaultWidth, shipDefaultHeight = shipDefault:getSize()
@@ -23,6 +27,9 @@ function Ship:init(x, y)
 	self:setImage(shipDefault)
 	self:moveTo(x, y)
 	
+	self.shieldCount = 3
+	self.shieldActive = false
+	
 	defaultRect.x = x - shipDefaultWidth/2
 	defaultRect.y = y - shipDefaultHeight/2
 	
@@ -30,10 +37,27 @@ function Ship:init(x, y)
 	bankedRect.y = y - shipBankedHeight/2
 end
 
+function Ship:activateShield()
+	if(self.shieldCount > 0)then
+			print("activating shield!!!!")
+			--todo
+			self:setImage(shipDefaultShielded)
+			self.shieldCount -= 1
+			self.shieldActive = true
+			return true
+		else
+			return false
+	end
+end
+
 function Ship:collision(damage)
-	self.energy = self.energy - damage
-	if(collisionSample:isPlaying() == false)then
-		collisionSample:play()
+	if(self.shieldActive) then
+		--todo - active shield collision sound
+	else
+		self.energy = self.energy - damage
+		if(collisionSample:isPlaying() == false)then
+			collisionSample:play()
+		end
 	end
 end
 
@@ -46,18 +70,38 @@ function Ship:setEnergy(energy)
 end
 
 function Ship:bankLeft()
-	self:setImage(shipLeft)
-	self.shipState = ShipState.left
+	if(self.shipState ~= ShipState.left)then
+		if(self.shieldActive)then
+			self:setImage(shipLeftShielded)
+			self.shipState = ShipState.left
+		else
+			self:setImage(shipLeft)
+			self.shipState = ShipState.left
+		end
+	end
 end
 
 function Ship:bankRight()
-	self:setImage(shipRight)
-	self.shipState = ShipState.right
+	if(self.shipState ~= ShipState.right)then
+		if(self.shieldActive)then
+			self:setImage(shipRightShielded)
+			self.shipState = ShipState.right
+		else
+			self:setImage(shipRight)
+			self.shipState = ShipState.right
+		end
+	end
 end
 
 function Ship:straight()
-	self:setImage(shipDefault)
-	self.shipState = ShipState.default
+	if(self.shipState ~= ShipState.default)then
+		if(self.shieldActive)then
+			self:setImage(shipDefaultShielded)
+		else
+			self:setImage(shipDefault)
+		end
+		self.shipState = ShipState.default
+	end
 end
 
 function Ship:getHitRect()

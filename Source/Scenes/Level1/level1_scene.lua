@@ -76,7 +76,8 @@ function Level1Scene:draw()
 	end
 	
 	if(bPressed())then
-		self.ship:setEnergy(0)
+		print("activate shield!!")
+		local success = self.ship:activateShield()
 	end
 	
 	if(upRepeat())then
