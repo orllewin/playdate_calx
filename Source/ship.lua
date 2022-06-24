@@ -10,6 +10,7 @@ local shipDefaultShielded = playdate.graphics.image.new("images/ship_default_shi
 local shipLeftShielded = playdate.graphics.image.new("images/ship_bank_left_shielded")
 local shipRightShielded = playdate.graphics.image.new("images/ship_bank_right_shielded")
 
+local shieldsUpSample = playdate.sound.sampleplayer.new("audio/shields_up_a")
 local collisionSample = playdate.sound.sampleplayer.new("audio/collision")
 local collisionShieldedSample = playdate.sound.sampleplayer.new("audio/shield_collision")
 
@@ -40,7 +41,8 @@ function Ship:init(x, y)
 end
 
 function Ship:activateShield()
-	if(self.shieldCount > 0)then			
+	if(self.shieldCount > 0)then	
+			shieldsUpSample:play()		
 			self:setImage(shipDefaultShielded)
 			self.shieldCount -= 1
 			self.shieldCollisionCount = 0
@@ -66,9 +68,9 @@ function Ship:collision(damage)
 			self.shieldActive = false
 			
 			--reset sprite
-			if(self.shipState ~= ShipState.default)then
+			if(self.shipState == ShipState.default)then
 				self:setImage(shipDefault)
-			elseif (self.shipState ~= ShipState.left) then
+			elseif (self.shipState == ShipState.left) then
 				self:setImage(shipLeft)
 			else
 				self:setImage(shipRight)
