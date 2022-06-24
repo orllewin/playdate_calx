@@ -24,6 +24,11 @@ end
 function SplashScene:draw()
 	background(black)
 	self.splashImage:draw(0, 0)
+	
+	if(aPressed())then
+		self.timer:remove()
+		self.onSplashEnd()
+	end
 
 	text("©2022 Orllewin", 10, 180)
 	text("Music by Rolemusic", 10, 200)
