@@ -10,7 +10,7 @@ local shipDefaultShielded = playdate.graphics.image.new("images/ship_default_shi
 local shipLeftShielded = playdate.graphics.image.new("images/ship_bank_left_shielded")
 local shipRightShielded = playdate.graphics.image.new("images/ship_bank_right_shielded")
 
-local shieldsUpSample = playdate.sound.sampleplayer.new("audio/shields_up_a")
+local shieldsUpSample = playdate.sound.sampleplayer.new("audio/shields_active")
 local collisionSample = playdate.sound.sampleplayer.new("audio/collision")
 local collisionShieldedSample = playdate.sound.sampleplayer.new("audio/shield_collision")
 
@@ -33,6 +33,22 @@ function Ship:init(x, y)
 	self.shieldCollisionCount = 0
 	self.shieldActive = false
 	
+	self.onShieldEnd = function()
+		print("Shield ended... resettings")
+		self.shieldActive = false
+		
+		--todo - shield down sound
+		
+		--reset sprite
+		if(self.shipState == ShipState.default)then
+			self:setImage(shipDefault)
+		elseif (self.shipState == ShipState.left) then
+			self:setImage(shipLeft)
+		else
+			self:setImage(shipRight)
+		end
+  end
+	
 	defaultRect.x = x - shipDefaultWidth/2
 	defaultRect.y = y - shipDefaultHeight/2
 	
@@ -45,12 +61,16 @@ function Ship:activateShield()
 			shieldsUpSample:play()		
 			self:setImage(shipDefaultShielded)
 			self.shieldCount -= 1
-			self.shieldCollisionCount = 0
 			self.shieldActive = true
+			self.shieldTimer = playdate.timer.performAfterDelay(6000, self.onShieldEnd)
 			return true
 		else
 			return false
 	end
+end
+
+function Ship:isShieldActive()
+	return self.shieldActive
 end
 
 function Ship:collision(damage)
@@ -58,23 +78,6 @@ function Ship:collision(damage)
 		--todo - active shield collision sound
 		if(collisionShieldedSample:isPlaying() == false)then
 			collisionShieldedSample:play()
-		end
-		
-		self.shieldCollisionCount += 1
-		
-		--If ship's been hit 10 times turn shield off
-		if(self.shieldCollisionCount >= 10)then
-			self.shieldCollisionCount = 0
-			self.shieldActive = false
-			
-			--reset sprite
-			if(self.shipState == ShipState.default)then
-				self:setImage(shipDefault)
-			elseif (self.shipState == ShipState.left) then
-				self:setImage(shipLeft)
-			else
-				self:setImage(shipRight)
-			end
 		end
 	else
 		self.energy = self.energy - damage

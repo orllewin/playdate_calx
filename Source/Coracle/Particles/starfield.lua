@@ -129,11 +129,14 @@ function Starfield:draw(crankDegrees, shipRect)
 		xx = (r * xx) + C.x
 		yy = (r * yy) + C.y
 		
-		if(star.z > width/3)then
-			point(xx, yy)
-		else
-			circle(xx, yy, star.size)
-		end
+		
+		circle(xx, yy, star.size)
+		
+		-- if(star.z > width/3)then
+		-- 	point(xx, yy)
+		-- else
+		-- 	circle(xx, yy, star.size)
+		-- end
 		
 		--Check collision
 		if(shipRect ~= nil and yy >= shipRect.y and yy < height)then

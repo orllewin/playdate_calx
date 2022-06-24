@@ -134,6 +134,10 @@ function Level1Scene:draw()
 			activeScene:clear()
 			activeScene = GameOverScene(self.score:getFinalScore())
 	end
+	
+	if(self.ship:isShieldActive())then
+		playdate.timer.updateTimers()
+	end
 end
 
 function Level1Scene:clear()
