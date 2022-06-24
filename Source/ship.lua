@@ -11,6 +11,7 @@ local shipLeftShielded = playdate.graphics.image.new("images/ship_bank_left_shie
 local shipRightShielded = playdate.graphics.image.new("images/ship_bank_right_shielded")
 
 local collisionSample = playdate.sound.sampleplayer.new("audio/collision")
+local collisionShieldedSample = playdate.sound.sampleplayer.new("audio/shield_collision")
 
 local shipDefaultWidth, shipDefaultHeight = shipDefault:getSize()
 local shipBankedWidth, shipBankedHeight = shipLeft:getSize()
@@ -28,6 +29,7 @@ function Ship:init(x, y)
 	self:moveTo(x, y)
 	
 	self.shieldCount = 3
+	self.shieldCollisionCount = 0
 	self.shieldActive = false
 	
 	defaultRect.x = x - shipDefaultWidth/2
@@ -38,11 +40,10 @@ function Ship:init(x, y)
 end
 
 function Ship:activateShield()
-	if(self.shieldCount > 0)then
-			print("activating shield!!!!")
-			--todo
+	if(self.shieldCount > 0)then			
 			self:setImage(shipDefaultShielded)
 			self.shieldCount -= 1
+			self.shieldCollisionCount = 0
 			self.shieldActive = true
 			return true
 		else
@@ -53,6 +54,26 @@ end
 function Ship:collision(damage)
 	if(self.shieldActive) then
 		--todo - active shield collision sound
+		if(collisionShieldedSample:isPlaying() == false)then
+			collisionShieldedSample:play()
+		end
+		
+		self.shieldCollisionCount += 1
+		
+		--If ship's been hit 10 times turn shield off
+		if(self.shieldCollisionCount >= 10)then
+			self.shieldCollisionCount = 0
+			self.shieldActive = false
+			
+			--reset sprite
+			if(self.shipState ~= ShipState.default)then
+				self:setImage(shipDefault)
+			elseif (self.shipState ~= ShipState.left) then
+				self:setImage(shipLeft)
+			else
+				self:setImage(shipRight)
+			end
+		end
 	else
 		self.energy = self.energy - damage
 		if(collisionSample:isPlaying() == false)then
